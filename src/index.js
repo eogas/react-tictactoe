@@ -61,7 +61,8 @@ class Game extends React.Component {
                 moveLocation: null
             }],
             stepNumber: 0,
-            xIsNext: true
+            xIsNext: true,
+            reverseMoveList: false
         }
     }
 
@@ -86,6 +87,12 @@ class Game extends React.Component {
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext
+        });
+    }
+
+    handleReverse() {
+        this.setState({
+            reverseMoveList: !this.state.reverseMoveList
         });
     }
 
@@ -136,6 +143,10 @@ class Game extends React.Component {
             );
         });
 
+        if (this.state.reverseMoveList) {
+            moves.reverse();
+        }
+
         let status;
         if (winState.winner) {
             status = 'Winner: ' + winState.winner;
@@ -158,6 +169,11 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>{status}</div>
+                    <button
+                        onClick={() => this.handleReverse()}
+                    >
+                        Reverse
+                    </button>
                     <ol>{moves}</ol>
                 </div>
             </div>
