@@ -34,6 +34,14 @@ body {
   .winning-square {
       font-weight: bold;
   }
+
+  .move {
+      list-style-type: none;
+  }
+
+  .current-move {
+      font-weight: bold;
+  }
   
   .square:focus {
     outline: none;
