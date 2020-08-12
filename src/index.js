@@ -57,7 +57,8 @@ class Game extends React.Component {
 
         this.state = {
             history: [{
-                squares: Array(9).fill(null)
+                squares: Array(9).fill(null),
+                moveLocation: null
             }],
             stepNumber: 0,
             xIsNext: true
@@ -80,7 +81,8 @@ class Game extends React.Component {
 
         this.setState({
             history: history.concat([{
-                squares: squares
+                squares: squares,
+                moveLocation: i
             }]),
             stepNumber: history.length,
             xIsNext: !this.state.xIsNext
@@ -110,6 +112,16 @@ class Game extends React.Component {
             if (move === this.state.stepNumber) {
                 moveClass = 'current-move';
             }
+
+            let coords = '';
+            const whoMoved = move % 2 ? 'X' : 'O';
+
+            if (step.moveLocation !== null) {
+                const y = Math.floor(step.moveLocation / 3);
+                const x = step.moveLocation % 3;
+
+                coords = `${whoMoved} (${x}, ${y})`;
+            }
             
             return (
                 <li key={move} className="move">
@@ -119,6 +131,7 @@ class Game extends React.Component {
                     >
                         {label}
                     </button>
+                    <span className='coords'>{coords}</span>
                 </li>
             );
         });
