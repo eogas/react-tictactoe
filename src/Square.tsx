@@ -1,6 +1,12 @@
 import React from 'react';
 
-export function Square(props) {
+export interface Props {
+    inWinningRow: boolean,
+    value: string | null,
+    onClick: () => void
+}
+
+export function Square(props: Props) {
     let className = 'square';
 
     if (props.inWinningRow) {
