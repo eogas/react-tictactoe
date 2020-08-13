@@ -9,23 +9,23 @@ export function Board(props) {
             onClick={() => props.onClick(i)} />);
     }
 
-    return (
-        <div>
+    const renderRowSquares = (rowNumber) => {
+        return (
+            [0, 1, 2]
+            .map((column) => (rowNumber * 3) + column)
+            .map((squareIndex) => renderSquare(squareIndex))
+        );
+    };
+
+    const renderRows = () => {
+        let squares = [0, 1, 2].map((rowNum) => renderRowSquares(rowNum));
+
+        return squares.map((row) => (
             <div className="board-row">
-                {renderSquare(0)}
-                {renderSquare(1)}
-                {renderSquare(2)}
+                {row}
             </div>
-            <div className="board-row">
-                {renderSquare(3)}
-                {renderSquare(4)}
-                {renderSquare(5)}
-            </div>
-            <div className="board-row">
-                {renderSquare(6)}
-                {renderSquare(7)}
-                {renderSquare(8)}
-            </div>
-        </div>
-    );
+        ));
+    };
+
+    return (<div>{renderRows()}</div>);
 }
