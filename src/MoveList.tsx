@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 
-export function MoveList(props) {
+interface Props {
+    currentStep: number,
+    jumpTo: (move: number) => void,
+    moveLocations: Array<number | null>
+}
+
+export function MoveList(props: Props) {
     const [isReversed, setIsReversed] = useState(false);
 
-    const renderMove = (step, moveIndex) => {
+    const renderMove = (moveLocation: number | null, moveIndex: number) => {
         const label = moveIndex ?
             'Go to move #' + moveIndex :
             'Go to game start';
@@ -17,9 +23,9 @@ export function MoveList(props) {
         let coords = '';
         const whoMoved = moveIndex % 2 ? 'X' : 'O';
 
-        if (step.moveLocation !== null) {
-            const y = Math.floor(step.moveLocation / 3);
-            const x = step.moveLocation % 3;
+        if (moveLocation !== null) {
+            const y = Math.floor(moveLocation / 3);
+            const x = moveLocation % 3;
 
             coords = `${whoMoved} (${x}, ${y})`;
         }
@@ -37,7 +43,8 @@ export function MoveList(props) {
         );
     };
 
-    let moves = props.steps.map((step, moveIndex) => renderMove(step, moveIndex));
+    let moves = props.moveLocations.map(
+        (moveLocation, moveIndex) => renderMove(moveLocation, moveIndex));
 
     if (isReversed) {
         moves.reverse();
