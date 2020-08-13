@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export class MoveList extends React.Component {
-    constructor(props) {
-        super(props);
+export function MoveList(props) {
+    const [isReversed, setIsReversed] = useState(false);
 
-        this.state = {
-            isReversed: false
-        };
-    }
-
-    toggleReverse() {
-        this.setState({
-            isReversed: !this.state.isReversed
-        });
-    }
-
-    renderMove(step, moveIndex) {
+    const renderMove = (step, moveIndex) => {
         const label = moveIndex ?
             'Go to move #' + moveIndex :
             'Go to game start';
 
         let moveClass = '';
 
-        if (moveIndex === this.props.currentStep) {
+        if (moveIndex === props.currentStep) {
             moveClass = 'current-move';
         }
 
@@ -40,29 +28,27 @@ export class MoveList extends React.Component {
             <li key={moveIndex} className="move">
                 <button
                     className={moveClass}
-                    onClick={() => this.props.jumpTo(moveIndex)}
+                    onClick={() => props.jumpTo(moveIndex)}
                 >
                     {label}
                 </button>
                 <span className='coords'>{coords}</span>
             </li>
         );
+    };
+
+    let moves = props.steps.map((step, moveIndex) => renderMove(step, moveIndex));
+
+    if (isReversed) {
+        moves.reverse();
     }
 
-    render() {
-        let moves = this.props.steps.map((step, moveIndex) => this.renderMove(step, moveIndex));
-
-        if (this.state.isReversed) {
-            moves.reverse();
-        }
-
-        return (<>
-            <button
-                onClick={() => this.toggleReverse()}
-            >
-                Reverse
-            </button>
-            <ol>{moves}</ol>
-        </>);
-    }
+    return (<>
+        <button
+            onClick={() => setIsReversed(!isReversed)}
+        >
+            Reverse
+        </button>
+        <ol>{moves}</ol>
+    </>);
 }

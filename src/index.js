@@ -42,12 +42,6 @@ class Game extends React.Component {
         });
     }
 
-    handleReverse() {
-        this.setState({
-            reverseMoveList: !this.state.reverseMoveList
-        });
-    }
-
     jumpTo(step) {
         this.setState({
             stepNumber: step,
