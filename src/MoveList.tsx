@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import {
+    Row,
+    Button,
+    ListGroup
+} from 'react-bootstrap';
 
 interface Props {
     currentStep: number,
@@ -14,10 +19,10 @@ export function MoveList(props: Props) {
             'Go to move #' + moveIndex :
             'Go to game start';
 
-        let moveClass = '';
+        let moveClass = 'light';
 
         if (moveIndex === props.currentStep) {
-            moveClass = 'current-move';
+            moveClass = 'dark';
         }
 
         let coords = '';
@@ -29,17 +34,15 @@ export function MoveList(props: Props) {
 
             coords = `${whoMoved} (${x}, ${y})`;
         }
-        
+
         return (
-            <li key={moveIndex} className="move">
-                <button
-                    className={moveClass}
-                    onClick={() => props.jumpTo(moveIndex)}
-                >
-                    {label}
-                </button>
+            <ListGroup.Item
+                action
+                variant={moveClass}
+                onClick={() => props.jumpTo(moveIndex)}>
+                {label}
                 <span className='coords'>{coords}</span>
-            </li>
+            </ListGroup.Item>
         );
     };
 
@@ -51,11 +54,15 @@ export function MoveList(props: Props) {
     }
 
     return (<>
-        <button
-            onClick={() => setIsReversed(!isReversed)}
-        >
-            Reverse
-        </button>
-        <ol>{moves}</ol>
+        <Row>
+            <Button
+                onClick={() => setIsReversed(!isReversed)}
+            >
+                Reverse
+            </Button>
+        </Row>
+        <Row className="my-2">
+            <ListGroup>{moves}</ListGroup>
+        </Row>
     </>);
 }

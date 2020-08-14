@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+
+import {
+    Container,
+    Row,
+    Col
+} from 'react-bootstrap';
+
 import './index.css';
+
 import { Board } from './Board';
 import { MoveList } from './MoveList';
 
@@ -64,22 +72,24 @@ function Game(props: Props) {
     }
 
     return (
-        <div className="game">
-            <div className="game-board">
-                <Board
-                    squares={current.squares}
-                    winningRow={winState.winningRow}
-                    onClick={(i) => handleClick(i)}
-                />
-            </div>
-            <div className="game-info">
-                <div>{status}</div>
-                <MoveList
-                    moveLocations={history.map((step) => step.moveLocation)}
-                    currentStep={stepNumber}
-                    jumpTo={(step) => jumpTo(step)}/>
-            </div>
-        </div>
+        <Container>
+            <Row className="justify-content-md-center">
+                <Col md="auto">
+                    <Board
+                        squares={current.squares}
+                        winningRow={winState.winningRow}
+                        onClick={(i) => handleClick(i)}
+                    />
+                </Col>
+                <Col md="auto">
+                    <h5>{status}</h5>
+                    <MoveList
+                        moveLocations={history.map((step) => step.moveLocation)}
+                        currentStep={stepNumber}
+                        jumpTo={(step) => jumpTo(step)}/>
+                </Col>
+            </Row>
+        </Container>
     );
 }
 
