@@ -43,9 +43,9 @@ function Game(props: Props) {
 
         squares[i] = xIsNext ? 'X' : 'O';
 
-        setStepNumber(history.length);
+        setStepNumber(visibleHistory.length);
         setXIsNext(!xIsNext);
-        setHistory(history.concat([{
+        setHistory(visibleHistory.concat([{
             squares: squares,
             moveLocation: i
         }]));
